@@ -1,0 +1,19 @@
+# Compiled binary
+mydb
+csql
+
+# Object files
+*.o
+
+# VSCode
+.vscode/
+
+# Database files
+*.csql
+
+# Debug/core dumps
+core
+vgcore.*
+
+# Build directory
+build/
