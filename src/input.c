@@ -7,7 +7,7 @@ char* repl() {
         char c = '\n';
         size_t iter = 0, cbuf = INIT_INPUT_BUFFER; // cbuf = current buffer size
         while((c = getchar()) != '\n' && c != EOF) {
-            if(iter == cbuf - 1) {
+            if(iter == cbuf) {
                 char *tmp = realloc(user_input, cbuf * 2);
                 if (!tmp) {
                     malloc_err();
