@@ -4,7 +4,7 @@
 #include "input.h"
 
 int main() {
-    char* db_name = repl();
+    repl();
     
     return 0;
 }

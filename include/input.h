@@ -6,6 +6,6 @@
 
 #define INIT_INPUT_BUFFER 128
 
-char* repl();
+void repl();
 
 #endif

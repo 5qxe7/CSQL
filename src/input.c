@@ -2,15 +2,14 @@
 #include "heap_err.h"
 #include "parser.h"
 
-char* repl() {
+void repl() {
     int running = 1;
     while(running) {
         char* user_input = malloc(sizeof(char) * INIT_INPUT_BUFFER);
-        printf("%s", "hey");
         char c = '\n';
         size_t iter = 0, cbuf = INIT_INPUT_BUFFER; // cbuf = current buffer size
         while((c = getchar()) != '\n' && c != EOF) {
-            if(iter == cbuf) {
+            if(iter == cbuf - 1) {
                 char *tmp = realloc(user_input, cbuf * 2);
                 if (!tmp) {
                     malloc_err();
@@ -21,6 +20,7 @@ char* repl() {
             user_input[iter] = c;
             iter++;
         }
+        user_input[iter] = '\0';
         struct ParseResult result = parse(user_input);
         free(user_input);
         // break off execution later
@@ -36,7 +36,7 @@ char* repl() {
                 running = 0;
                 break;
             case PARSE_EMPTY:
-                printf("%c", '\n');
+                printf("%s", "sdfdsfsdfds\n");
                 break;
         }
     }

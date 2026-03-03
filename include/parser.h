@@ -1,5 +1,5 @@
-#ifndef CSQL_PARSER_C
-#define CSQL_PARSER_C
+#ifndef CSQL_PARSER_H
+#define CSQL_PARSER_H
 
 #include <string.h>
 #include <stdio.h> //remove after testing
