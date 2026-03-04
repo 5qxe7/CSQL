@@ -10,6 +10,7 @@ add_executable(csql
     src/input.c
     src/parser.c
     src/heap_err.c
+    src/parser_handler.c
 )
 
 set(CMAKE_C_STANDARD 17)

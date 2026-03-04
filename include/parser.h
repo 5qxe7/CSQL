@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdio.h> //remove after testing
+#include <stdbool.h>
 
 typedef enum {
     PARSE_OK,
@@ -13,7 +14,7 @@ typedef enum {
 
 struct ParseResult {
     ParseStatus status;
-    int exit_code;
+    long exit_code;
 };
 
 struct ParseResult parse(char *arg);

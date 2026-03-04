@@ -1,6 +1,7 @@
 #include "parser.h"
 #include "file_handler.h"
 #include "header.h"
+#include "parser_handler.h"
 
 struct ParseResult parse(char *input) {
     struct ParseResult result;
@@ -9,40 +10,22 @@ struct ParseResult parse(char *input) {
 
     char *strtok_r_saveptr;
     char *token = strtok_r(input, " ", &strtok_r_saveptr);
-    
-    while(token != NULL) { // main parser loop
-        if(strcmp(token, "SELECT") == 0) {
-            // TODO: handle select after file implementation is done
-        } else if(strcmp(token, "CREATE") == 0) {
-            token = strtok_r(NULL, " ", &strtok_r_saveptr);
 
-            if(token != NULL && strcmp(token, "DATABASE") == 0) {
-                token = strtok_r(NULL, " ", &strtok_r_saveptr);
-                if(token != NULL) {
-                    struct DbEmplaceResult emplace_result = db_emplace(token);
-                    if(emplace_result.status == DB_OK) {
-                        result.status = PARSE_OK;
-                        return result;
-                    }
-                }
-            result.status = PARSE_ERR;
-            return result;
+    struct HandlerResult handler_result;
+
+    while(token != NULL) { // main parser loop 
+        for (size_t i = 0; i < sizeof(Handlers) / sizeof(Handlers[0]); i++) {
+            if(strcmp(token, Handlers[i].name) == 0) {
+                handler_result = Handlers[i].ptr(strtok_r_saveptr, input);
+                strtok_r_saveptr = handler_result.saveptr_new;
+                break;
             }
-        } else if(strcmp(token, "EXIT") == 0) {
-            token = strtok_r(NULL, " ", &strtok_r_saveptr);
-            char *endptr; // required by strtol, points to the first char that couldn't be converted
-            if (token != NULL) {
-                long code = strtol(token, &endptr, 10);
-                if (endptr != token || *endptr == '\0') { // if endptr == token, that means endptr didnt advance (nothing was converted)
-                    result.exit_code = (int)code;
-                }
-            }
-            result.status = PARSE_EXIT;
-            return result;
-        } else {
-            // for now non-matching statements will be considered empty, handle unrecognized syntax later
-            result.status = PARSE_EMPTY;
-            return result;
-        }
+        };
+        token = strtok_r(NULL, " ", &strtok_r_saveptr);
     }
+    if(handler_result.result_status == HANDLE_EXIT) {
+        result.status = PARSE_EXIT;
+        result.exit_code = handler_result.exit_code;
+    }
+    return result;
 }
