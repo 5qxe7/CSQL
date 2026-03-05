@@ -13,7 +13,8 @@ struct ParseResult parse(char *input) {
 
     struct HandlerResult handler_result;
 
-    while(token != NULL) { // main parser loop 
+    while(token != NULL) { // main parser loop
+        printf("%s", "in parser body\n");
         for (size_t i = 0; i < sizeof(Handlers) / sizeof(Handlers[0]); i++) {
             if(strcmp(token, Handlers[i].name) == 0) {
                 handler_result = Handlers[i].ptr(strtok_r_saveptr, input);
@@ -22,6 +23,7 @@ struct ParseResult parse(char *input) {
             }
         };
         token = strtok_r(NULL, " ", &strtok_r_saveptr);
+        printf("%s %s", "object pointed to: ", strtok_r_saveptr);
     }
     if(handler_result.result_status == HANDLE_EXIT) {
         result.status = PARSE_EXIT;
