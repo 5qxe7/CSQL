@@ -23,7 +23,6 @@ struct ParseResult parse(char *input) {
             }
         };
         token = strtok_r(NULL, " ", &strtok_r_saveptr);
-        printf("%s %s", "object pointed to: ", strtok_r_saveptr);
     }
     if(handler_result.result_status == HANDLE_EXIT) {
         result.status = PARSE_EXIT;
