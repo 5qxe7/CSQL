@@ -36,7 +36,6 @@ void repl() {
                 running = 0;
                 break;
             case PARSE_EMPTY:
-                printf("%s", "sdfdsfsdfds\n");
                 break;
         }
     }
