@@ -1,8 +1,7 @@
 #include "header.h"
-#include "file_handler.h"
+#include "parser_handler.h"
 
-
-struct DbEmplaceResult db_emplace (char *db_name) {
+struct HandlerResult db_emplace (char *strtok_r_saveptr, char *token) {
     //create header and write flags to file
     struct DbHeader header;
     strcpy(header.magic, "csql");
@@ -11,19 +10,24 @@ struct DbEmplaceResult db_emplace (char *db_name) {
     header.endianness = DEFAULT_ENDIANNESS;
     memset(header.reserved, 0, FLAG_RESERVE_SIZE);
 
+    char *db_name = strtok_r(token, " ", NULL);
+    if(!token) {
+        exit(0);
+    }
+
     FILE *file = fopen(db_name, "wb");
     // DbEmplaceResult returns only one item right now
     // Struct decision for expandibility
     if(!file) {
-        struct DbEmplaceResult result_struct;
-        result_struct.status = DB_ERR_FILE;
+        struct HandlerResult result_struct;
+        result_struct.result_status = HANDLE_ERR;
         return result_struct;
     };
 
     fwrite(&header, sizeof(header), 1, file);
     fclose(file);
 
-    struct DbEmplaceResult result_struct;
-    result_struct.status = DB_OK;
+    struct HandlerResult result_struct;
+    result_struct.result_status = HANDLE_OK;
     return result_struct;
 }

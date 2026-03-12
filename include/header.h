@@ -11,18 +11,12 @@
 #define FLAG_RESERVE_SIZE 15
 #define EMPLACE_RESULT_SIZE 5
 
-typedef enum { DB_OK, DB_ERR_FILE } DbStatus;
-
 struct DbHeader {
     char magic[MAGIC_SIZE];
     uint16_t version;
     uint32_t page_size;
     uint8_t endianness;
     uint8_t reserved[FLAG_RESERVE_SIZE];
-};
-
-struct DbEmplaceResult {
-    DbStatus status;
 };
 
 #endif

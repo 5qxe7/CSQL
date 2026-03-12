@@ -5,7 +5,10 @@
 #include <stdlib.h>
 #include <stdio.h> // <<-temp
 
+
 typedef struct HandlerResult (*func_ptr)(char *strtok_r_saveptr, char *token);
+
+struct HandlerResult db_emplace (char *strtok_r_saveptr, char *token);
 
 struct HandlerResult handler_exit(char *strtok_r_saveptr, char *token);
 
@@ -16,7 +19,7 @@ struct Handler {
 
 static struct Handler Handlers[] = {
     {"SELECT", },
-    {"CREATE", },
+    {"CREATE", db_emplace},
     {"EXIT", handler_exit},
 };
 
