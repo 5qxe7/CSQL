@@ -4,6 +4,7 @@
 #include "input.h"
 
 int main() {
+    printf("CSQL VERSION %d\nENTER COMMANDS BELOW LINE BY LINE\n", VERSION);
     repl();
     
     return 0;
