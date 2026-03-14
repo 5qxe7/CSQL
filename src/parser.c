@@ -2,12 +2,12 @@
 #include "file_handler.h"
 #include "header.h"
 #include "parser_handler.h"
+#include "create.h"
 
 struct ParseResult parse(char *input) {
     struct ParseResult result;
     result.status = PARSE_EMPTY;
     result.exit_code = 0;
-
     char *strtok_r_saveptr;
     char *token = strtok_r(input, " ", &strtok_r_saveptr);
 
@@ -16,8 +16,7 @@ struct ParseResult parse(char *input) {
     while(token != NULL) { // main parser loop
         for (size_t i = 0; i < sizeof(Handlers) / sizeof(Handlers[0]); i++) {
             if(strcmp(token, Handlers[i].name) == 0) {
-                handler_result = Handlers[i].ptr(strtok_r_saveptr, input);
-                strtok_r_saveptr = handler_result.saveptr_new;
+                handler_result = Handlers[i].ptr(&strtok_r_saveptr, input);
                 break;
             }
         };

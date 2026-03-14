@@ -4,13 +4,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h> // <<-temp
+#include "create.h"
+#include "handler_types.h"
 
+typedef struct HandlerResult (*func_ptr)(char **strtok_r_saveptr, char *token);
 
-typedef struct HandlerResult (*func_ptr)(char *strtok_r_saveptr, char *token);
+struct HandlerResult create (char **strtok_r_saveptr, char *token);
 
-struct HandlerResult db_emplace (char *strtok_r_saveptr, char *token);
-
-struct HandlerResult handler_exit(char *strtok_r_saveptr, char *token);
+struct HandlerResult handler_exit(char **strtok_r_saveptr, char *token);
 
 struct Handler {
     char *name;
@@ -18,23 +19,9 @@ struct Handler {
 };
 
 static struct Handler Handlers[] = {
-    {"SELECT", },
-    {"CREATE", db_emplace},
+    //{"SELECT", },
+    {"CREATE", create},
     {"EXIT", handler_exit},
-};
-
-typedef enum {
-    HANDLE_OK,
-    HANDLE_ERR,
-    HANDLE_EXIT,
-    HANDLE_EMPTY,
-} HandlerResult;
-
-struct HandlerResult {
-    HandlerResult result_status;
-    int exit_code; // exit code for HANDLE_EXIT, disregard otherwise
-    char *saveptr_new;
-    // later returns pointer to the resulting element in the db
 };
 
 #endif

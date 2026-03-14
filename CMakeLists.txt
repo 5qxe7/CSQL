@@ -1,5 +1,6 @@
 # set where final binary goes
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
+set(CMAKE_BUILD_TYPE Debug)
 
 cmake_minimum_required(VERSION 4.2.3)
 project(CSQL C)
@@ -11,6 +12,7 @@ add_executable(csql
     src/parser.c
     src/heap_err.c
     src/parser_handler.c
+    src/create.c
 )
 
 set(CMAKE_C_STANDARD 17)

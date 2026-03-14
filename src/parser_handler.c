@@ -1,10 +1,10 @@
 #include "parser_handler.h"
 
-struct HandlerResult handler_exit(char *strtok_r_saveptr, char *token) {
+struct HandlerResult handler_exit(char **strtok_r_saveptr, char *token) {
     // input is current token from the caller
     struct HandlerResult result = {0};
     result.result_status = HANDLE_EXIT;
-    token = strtok_r(NULL, " ", &strtok_r_saveptr);
+    token = strtok_r(NULL, " ", strtok_r_saveptr);
     if(token){
         char *endptr;
         long number = strtol(token, &endptr, 0);
@@ -12,8 +12,6 @@ struct HandlerResult handler_exit(char *strtok_r_saveptr, char *token) {
             result.exit_code = (int)number;
         }
     }
-    
-    result.saveptr_new = strtok_r_saveptr;
 
     return result;
     
