@@ -24,7 +24,12 @@ struct ParseResult parse(char *input) {
     }
     if(handler_result.result_status == HANDLE_EXIT) {
         result.status = PARSE_EXIT;
-        result.exit_code = handler_result.exit_code;
+    } else if (handler_result.result_status == HANDLE_OK) {
+        result.status = PARSE_OK;
+    } else if (handler_result.result_status == HANDLE_ERR) {
+        result.status = HANDLE_ERR;
+    } else {
+        result.status = HANDLE_EMPTY;
     }
     return result;
 }

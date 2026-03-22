@@ -17,7 +17,7 @@ struct HandlerResult db_emplace (char **strtok_r_saveptr, char *token) {
     }
     char *db_name = strtok_r(NULL, " ", strtok_r_saveptr);
     
-    FILE *file = fopen(db_name, "wb");
+    FILE *file = fopen(db_name, "wb"); 
     // DbEmplaceResult returns only one item right now
     // Struct decision for expandibility
     if(!file) {
@@ -30,4 +30,8 @@ struct HandlerResult db_emplace (char **strtok_r_saveptr, char *token) {
 
     result.result_status = HANDLE_OK;
     return result;
+}
+
+void create_table (char **strtok_r_saveptr, char *token) { // change from void later, declared in file_handler.h
+    
 }

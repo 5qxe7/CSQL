@@ -15,6 +15,8 @@ add_executable(csql
     src/create.c
 )
 
+add_compile_options(-Wall -Wextra)
+
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 target_include_directories(csql PRIVATE include)
